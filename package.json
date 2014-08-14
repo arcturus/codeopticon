@@ -1,0 +1,17 @@
+{
+  "name": "codeopticon",
+  "version": "0.0.1",
+  "description": "Subscribe to modifications to parts of your codebase",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Francisco Jordano <francisco@jordano.es>",
+  "license": "MPL",
+  "dependencies": {
+    "diff-parse": "0.0.13",
+    "express": "^4.7.2",
+    "promise": "^5.0.0",
+    "request": "^2.39.0",
+    "then-couchdb": "^0.4.4"
+  }
+}
