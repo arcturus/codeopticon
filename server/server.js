@@ -31,7 +31,7 @@ function parsePullRequest(req, res) {
     res.status(200).end();
   } else {
     console.log('Dont know this action :(');
-    res.status(404).end();
+    res.status(200).end();
   }
 }
 
