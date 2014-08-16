@@ -1,11 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var pullRequestHandler = require('../lib/pull_request_handler.js');
 
 var app = express();
 app.use(bodyParser.json());
 
 function parsePing(req, res) {
   console.log('Zen message: ' + req.body.zen);
+  pullRequestHandler.ping(req.body.hook);
   res.status(200).end();
 }
 
@@ -13,6 +15,7 @@ function parsePullRequest(req, res) {
   var payload = req.body;
   if (!payload) {
     console.log('No payload :(');
+    res.status(404).end();
     return;
   }
 

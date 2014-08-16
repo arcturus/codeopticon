@@ -12,6 +12,7 @@
     "diff-parse": "0.0.13",
     "express": "^4.7.2",
     "promise": "^5.0.0",
+    "promised-mongo": "^0.11.1",
     "request": "^2.39.0",
     "then-couchdb": "^0.4.4"
   }
