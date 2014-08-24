@@ -1,0 +1,11 @@
+<section class="profile">
+  <header>
+    {{#if user}}
+    <img src="{{user._json.avatar_url}}"></img>
+    <h1><a href="{{user.profileUrl}}">{{user.username}}</a></h1>
+    <a href="/logout">Logout</a>
+    {{else}}
+    <a href="/auth/github">Login</a>
+    {{/if}}
+  </header>
+</section>

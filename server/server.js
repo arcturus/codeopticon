@@ -59,11 +59,14 @@ app.post('/hook', function(req, res) {
 });
 
 // Static content
-app.use(express.static(__dirname + '/../static/dist'));
+app.use(express.static(__dirname + '/../static/'));
 
 app.get('/', function(req, res) {
   if (req.isAuthenticated()) {
-    res.render('main.hbs');
+    console.log('-----> ' + JSON.stringify(req.user));
+    res.render('main.hbs', {
+      user: req.user
+    });
   } else {
     res.render('intro.hbs');
   }
