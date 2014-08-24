@@ -1,9 +1,19 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var pullRequestHandler = require('../lib/pull_request_handler.js');
+var auth = require('./auth.js');
+var api = require('./api.js');
+var exphbs  = require('express-handlebars');
 
 var app = express();
 app.use(bodyParser.json());
+app.use(auth.app);
+app.use(api.app);
+app.engine('hbs', exphbs({
+  extname: 'hbs',
+  defaultLayout: 'main.hbs'
+}));
+app.set('view engine', 'hbs');
 
 function parsePing(req, res) {
   console.log('Zen message: ' + req.body.zen);
@@ -45,6 +55,18 @@ app.post('/hook', function(req, res) {
     parsePing(req, res);
   } else {
     parsePullRequest(req, res);
+  }
+});
+
+// Static content
+app.use(express.static(__dirname + '/../static/dist'));
+
+app.get('/', function(req, res) {
+  if (req.isAuthenticated()) {
+    res.render('main.hbs');
+  } else {
+    console.log('Rendering intro');
+    res.render('intro.hbs');
   }
 });
 
