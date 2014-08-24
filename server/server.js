@@ -65,7 +65,6 @@ app.get('/', function(req, res) {
   if (req.isAuthenticated()) {
     res.render('main.hbs');
   } else {
-    console.log('Rendering intro');
     res.render('intro.hbs');
   }
 });

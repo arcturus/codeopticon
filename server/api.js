@@ -23,6 +23,11 @@ app.use(function(req, res, next) {
   next();
 });
 
+function standardReply(res, doc) {
+  doc = doc || {};
+  res.send(200, doc);
+}
+
 // Creates a new spy over a file
 app.post('/api/spies', function(req, res) {
   var url = req.body.githubUrl;
@@ -49,9 +54,26 @@ app.get('/api/spies', function(req, res) {
   var user = req.user;
 
   mongoData.getSpies(user).then(function(doc) {
-    doc = doc || {};
-    res.send(200, doc);
+    standardReply(res, doc);
   });
-})
+});
+
+app.get('/api/spies/repos', function(req, res) {
+  var user = req.user;
+
+  mongoData.getSpiedReposByUser(user).then(function(doc) {
+    standardReply(res, doc);
+  });
+});
+
+app.get('/api/spies/repos/:repoUser/:repoName', function(req, res) {
+  var user = req.user;
+  var repoName = req.params.repoName;
+  var repoUser = req.params.repoUser;
+
+  mongoData.getSpiedFilesByRepo(user, repoUser, repoName).then(function(doc) {
+    standardReply(res, doc);
+  });
+});
 
 module.exports.app = app;
