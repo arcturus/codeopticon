@@ -1,2 +1,9 @@
 {{> header }}
 {{> forms/watch }}
+<ul id="repos">
+{{#each repos}}
+  <li data-user="{{value this "spy.user"}}" data-repo="{{value this "spy.repo"}}">
+  {{value this "spy.user"}}/{{value this "spy.repo"}}
+  </li>
+{{/each}}
+</ul>
