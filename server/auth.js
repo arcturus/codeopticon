@@ -6,7 +6,8 @@ var express = require('express')
     , cookieParser = require('cookie-parser')
     , bodyParser = require('body-parser')
     , methodOverride = require('method-override')
-    , session = require('express-session');
+    , session = require('express-session')
+    , MongoStore = require('connect-mongo')(session);
 
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || '';
 var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || '';
@@ -40,10 +41,16 @@ passport.use(new GitHubStrategy({
 var app = express();
 // Logger
 app.use(morgan('combined'));
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use(session({secret: '12crfwpSDFF WFS{}21\\~'}));
+//app.use(session({secret: '12crfwpSDFF WFS{}21\\~'}));
+app.use(session({
+  secret: '12crfwpSDFF WFS{}21\\~',
+  store: new MongoStore({
+    db : 'codeopticon',
+  })
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
