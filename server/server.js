@@ -43,10 +43,10 @@ function parsePullRequest(req, res) {
   }
 
   if (action === 'opened') {
-    console.log('And here is where I parse the pull request');
+    pullRequestHandler.pullRequest(action, number, pullRequest);
     res.status(200).end();
   } else {
-    console.log('Dont know this action :(');
+    console.log('Action not implemented ' + action);
     res.status(200).end();
   }
 }
