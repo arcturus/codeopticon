@@ -19,9 +19,8 @@ app.engine('hbs', exphbs({
 app.set('view engine', 'hbs');
 
 function parsePing(req, res) {
-  console.log('Zen message: ' + req.body.zen);
   pullRequestHandler.ping(req.body.hook);
-  res.status(200).end();
+  res.status(200).end('Zen message: ' + req.body.zen);
 }
 
 function parsePullRequest(req, res) {
@@ -37,8 +36,7 @@ function parsePullRequest(req, res) {
   var pullRequest = payload.pull_request;
 
   if (!action || !number || !pullRequest) {
-    console.log('Dont have all the parameters');
-    res.status(404).end();
+    res.status(404).end('Missing parameters');
     return;
   }
 
@@ -46,13 +44,11 @@ function parsePullRequest(req, res) {
     pullRequestHandler.pullRequest(action, number, pullRequest);
     res.status(200).end();
   } else {
-    console.log('Action not implemented ' + action);
-    res.status(200).end();
+    res.status(200).end('Action not implemented ' + action);
   }
 }
 
 app.post('/hook', function(req, res) {
-  console.log('Hook working! ' + JSON.stringify(req.body));
   var payload = req.body;
   if (payload.zen) {
     parsePing(req, res);
@@ -67,7 +63,6 @@ app.use(express.static(__dirname + '/../static/'));
 app.get('/', function(req, res) {
   if (req.isAuthenticated()) {
     mongoData.getSpiedReposByUser(req.user).then(function(repos) {
-      console.log('0000000> sending ' + JSON.stringify(repos));
       res.render('main.hbs', {
         user: req.user,
         repos: repos
