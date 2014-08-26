@@ -1,7 +1,7 @@
 {
   "name": "codeopticon",
   "version": "0.0.1",
-  "description": "Subscribe to modifications to parts of your codebase",
+  "description": "Subscribe to modifications to parts of your codebase, watch all your files!",
   "scripts": {
     "start": "node index.js"
   },
