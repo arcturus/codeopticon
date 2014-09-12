@@ -1,3 +1,23 @@
+/**
+API DOC:
+
+POST
+/api/spies
+Creates a new spy (look for needed parameters)
+
+GET
+/api/spies
+Returns all spies for a user
+
+GET
+/api/spies/repos
+Returns list of repos spied by user
+
+GET
+/api/spies/repos/:repoUser/:repoName
+List of spies by user on an specific repo
+**/
+
 var express = require('express')
     , mongoData = require('../lib/data.js')
     , morgan  = require('morgan')
