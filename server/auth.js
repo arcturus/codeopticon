@@ -7,11 +7,12 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , methodOverride = require('method-override')
     , session = require('express-session')
-    , MongoStore = require('connect-mongo')(session),
+    , MongoStore = require('connect-mongo')(session)
     , config = require('../lib/config.js').config;
 
 var GITHUB_CLIENT_ID = config.get('GITHUB_CLIENT_ID') || '';
 var GITHUB_CLIENT_SECRET = config.get('GITHUB_CLIENT_SECRET') || '';
+var EXTERNAL_HOST = config.get('EXTERNAL_HOST') || '';
 
 // Serialise use just by id
 passport.serializeUser(function(user, done) {
@@ -28,7 +29,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GitHubStrategy({
   clientID: GITHUB_CLIENT_ID,
   clientSecret: GITHUB_CLIENT_SECRET,
-  callbackURL: "http://7411887a.ngrok.com/auth/github/callback"
+  callbackURL: EXTERNAL_HOST + '/auth/github/callback'
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
