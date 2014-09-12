@@ -7,10 +7,11 @@ var express = require('express')
     , bodyParser = require('body-parser')
     , methodOverride = require('method-override')
     , session = require('express-session')
-    , MongoStore = require('connect-mongo')(session);
+    , MongoStore = require('connect-mongo')(session),
+    , config = require('../lib/config.js').config;
 
-var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || '';
-var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET || '';
+var GITHUB_CLIENT_ID = config.get('GITHUB_CLIENT_ID') || '';
+var GITHUB_CLIENT_SECRET = config.get('GITHUB_CLIENT_SECRET') || '';
 
 // Serialise use just by id
 passport.serializeUser(function(user, done) {
