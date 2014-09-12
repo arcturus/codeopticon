@@ -2,8 +2,11 @@
 {{> forms/watch }}
 <ul id="repos">
 {{#each repos}}
-  <li data-type="repo" data-user="{{value this "spy.user"}}" data-repo="{{value this "spy.repo"}}">
-  {{value this "spy.user"}}/{{value this "spy.repo"}}
+  <li id="{{value this "spy.user"}}_{{value this "spy.repo"}}" data-type="repo" data-user="{{value this "spy.user"}}" data-repo="{{value this "spy.repo"}}">
+    {{value this "spy.user"}}/{{value this "spy.repo"}}
+    <section>
+
+    </section>
   </li>
 {{/each}}
 </ul>

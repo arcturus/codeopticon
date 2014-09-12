@@ -20,7 +20,21 @@
   }
 
   function getRepoInformation(user, repo) {
-    console.log('Getting information from ' + user + '/' + repo);
+    var url = '/api/spies/repos/:repoUser/:repoName'.
+      replace(':repoUser', user).
+      replace(':repoName', repo);
+
+    var req = $.ajax({url: url}).done(function() {
+      // Array of objects {spy.path: '....'}
+      var files = req.responseJSON;
+      var container = document.querySelector('#' + user + '_' + repo + ' section');
+      container.innerHTML = '';
+      files.forEach(function(file) {
+        var div = document.createElement('div');
+        div.textContent = file['spy.path'];
+        container.appendChild(div);
+      });
+    });
   }
 
   var App = {
