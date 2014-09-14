@@ -62,10 +62,10 @@ app.use(express.static(__dirname + '/../static/'));
 
 app.get('/', function(req, res) {
   if (req.isAuthenticated()) {
-    mongoData.getSpiedReposByUser(req.user).then(function(repos) {
+    mongoData.getUserSpiedInfo(req.user).then(function(info) {
       res.render('main.hbs', {
         user: req.user,
-        repos: repos
+        repos: info.repos
       });
     });
   } else {
