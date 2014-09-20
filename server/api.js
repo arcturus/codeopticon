@@ -60,13 +60,25 @@ app.post('/api/spies', function(req, res) {
     res.status(400).end();
     return;
   }
-  var data = {
-    user: req.user,
-    spy: spy
+  // Check that we are enabled on that repo
+  var fullName = spy.user + '/' + spy.repo;
+  var query = {
+    'full_name': fullName
   };
+  mongoData.getRepo(query).then(function(existingRepo) {
+    if (!existingRepo) {
+      res.status(400).end();
+      return;
+    }
 
-  mongoData.saveSpy(data).then(function(doc) {
-    res.send(200, doc);
+    var data = {
+      user: req.user,
+      spy: spy
+    };
+
+    mongoData.saveSpy(data).then(function(doc) {
+      res.send(200, doc);
+    });
   });
 });
 
