@@ -1,17 +1,3 @@
 {{> header }}
 {{> forms/watch }}
-<ul id="repos">
-{{#each repos}}
-  <li id="{{name}}" data-type="repo">
-    {{spiedUser}}/{{spiedRepo}}
-    <section>
-    {{#each spies}}
-      <div data-path="{{value this "spy.path"}}">
-        <span>{{value this "spy.path"}}</span>
-        <span data-path="{{value this "spy.path"}}" data-repo="{{../name}}"></span>
-      </div>
-    {{/each}}
-    </section>
-  </li>
-{{/each}}
-</ul>
+{{> repos_list }}
