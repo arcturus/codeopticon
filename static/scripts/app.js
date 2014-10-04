@@ -17,6 +17,8 @@
     form.addEventListener('submit', addNewSpy);
 
     registerHandlebarsHelpers();
+
+    Handlebars.TEMPLATES = {};
   }
 
   function registerHandlebarsHelpers() {
@@ -59,8 +61,15 @@
   }
 
   function getTemplate(name, data) {
+    if (Handlebars.TEMPLATES[name]) {
+      return $.Deferred(function(def) {
+        def.resolve(Handlebars.TEMPLATES[name](data));
+      }).promise();
+    }
+
     return $.get('/partials/'+name+'.hbs').then(function(src) {
-       return Handlebars.compile(src)(data);
+      Handlebars.TEMPLATES[name] = Handlebars.compile(src);
+      return Handlebars.TEMPLATES[name](data);
     });
   }
 
