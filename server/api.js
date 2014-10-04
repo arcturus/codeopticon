@@ -108,4 +108,12 @@ app.get('/api/spies/repos/:repoUser/:repoName', function(req, res) {
   });
 });
 
+app.get('/api/spies/all', function(req, res) {
+  var user = req.user;
+
+  mongoData.getUserSpiedInfo(user).then(function(doc) {
+    standardReply(res, doc);
+  });
+});
+
 module.exports.app = app;

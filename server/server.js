@@ -11,11 +11,12 @@ var app = express();
 app.use(bodyParser.json());
 app.use(auth.app);
 app.use(api.app);
-app.engine('hbs', exphbs({
+var hbs = exphbs.create({
   extname: 'hbs',
   defaultLayout: 'main.hbs',
   helpers: hbsHelpers
-}));
+});
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 function parsePing(req, res) {
@@ -59,6 +60,7 @@ app.post('/hook', function(req, res) {
 
 // Static content
 app.use(express.static(__dirname + '/../static/'));
+app.use('/partials/', express.static(__dirname + '/../views/partials'));
 
 app.get('/', function(req, res) {
   if (req.isAuthenticated()) {

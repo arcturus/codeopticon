@@ -15,6 +15,16 @@
 
     form = document.getElementById('addSpy');
     form.addEventListener('submit', addNewSpy);
+
+    registerHandlebarsHelpers();
+  }
+
+  function registerHandlebarsHelpers() {
+    Handlebars.registerHelper('value',
+     function value(context, key) {
+      return context[key];
+     }
+    );
   }
 
   // Delegate all the clicks here ... what could go wrong?
@@ -40,7 +50,18 @@
   }
 
   function refreshRepos() {
-    alert('Refrescando repos');
+    $.get('/api/spies/all').done(function(data) {
+      getTemplate('repos_list', data).then(function(html) {
+        $('#repos_list').html(html);
+      });
+    }).fail(function() {
+    });
+  }
+
+  function getTemplate(name, data) {
+    return $.get('/partials/'+name+'.hbs').then(function(src) {
+       return Handlebars.compile(src)(data);
+    });
   }
 
   var App = {
